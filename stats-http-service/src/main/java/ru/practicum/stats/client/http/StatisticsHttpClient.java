@@ -1,11 +1,11 @@
-package ru.practicum.client.http;
+package ru.practicum.stats.client.http;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.client.dto.HitRequest;
-import ru.practicum.client.dto.StatisticsResponse;
 
 import java.util.List;
+
+import ru.practicum.stats.client.dto.*;
 
 @Component
 public class StatisticsHttpClient {
