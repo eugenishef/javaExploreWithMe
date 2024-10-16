@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 
 import ru.practicum.stats.client.dto.*;
@@ -45,12 +47,17 @@ public class StatisticsController {
 
         statisticsService.logRequest("/stats");
 
-        LocalDateTime startDateTime = LocalDateTime.parse(start, FORMATTER);
-        LocalDateTime endDateTime = LocalDateTime.parse(end, FORMATTER);
+        try {
+            LocalDateTime startDateTime = LocalDateTime.parse(start, FORMATTER);
+            LocalDateTime endDateTime = LocalDateTime.parse(end, FORMATTER);
 
-        List<StatisticsResponse> stats = statisticsService.getStats(startDateTime, endDateTime, uris, unique);
+            List<StatisticsResponse> stats = statisticsService.getStats(startDateTime, endDateTime, uris, unique);
 
-        log.info("Fetched {} records", stats.size());
-        return ResponseEntity.ok(stats);
+            log.info("Fetched {} records", stats.size());
+            return ResponseEntity.ok(stats);
+        } catch (DateTimeParseException e) {
+            log.error("Invalid date format: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(Collections.singletonList(new StatisticsResponse("error", "Invalid date format", null, null)));
+        }
     }
 }

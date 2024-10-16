@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import ru.practicum.stats.client.dto.*;
@@ -38,25 +39,27 @@ public class StatisticsService {
     public List<StatisticsResponse> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         log.info("Fetching statistics from {} to {}, URIs: {}, Unique: {}", start, end, uris, unique);
 
-        List<Statistics> statsList = statisticsRepository.findAll();
+        List<Statistics> statsList = statisticsRepository.findByRequestTimeBetween(start, end);
         log.debug("Fetched {} records from the database", statsList.size());
 
-        List<Statistics> filteredStats = statsList.stream()
-                .filter(stat -> !stat.getRequestTime().isBefore(start) && !stat.getRequestTime().isAfter(end))
-                .filter(stat -> uris == null || uris.isEmpty() || uris.contains(stat.getEndpoint()))
-                .collect(Collectors.toList());
+        if (uris != null && !uris.isEmpty()) {
+            statsList = statsList.stream()
+                    .filter(stat -> uris.contains(stat.getEndpoint()))
+                    .collect(Collectors.toList());
+        }
 
         if (unique) {
-            filteredStats = filteredStats.stream()
+            statsList = statsList.stream()
                     .distinct()
                     .collect(Collectors.toList());
         }
 
-        List<StatisticsResponse> responseStats = filteredStats.stream()
-                .collect(Collectors.groupingBy(Statistics::getEndpoint))
-                .entrySet()
-                .stream()
-                .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), String.valueOf(entry.getValue().size()), null))
+        Map<String, Long> hitsMap = statsList.stream()
+                .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
+
+        List<StatisticsResponse> responseStats = hitsMap.entrySet().stream()
+                .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), entry.getValue().toString(), null))
+                .sorted((a, b) -> Long.compare(Long.parseLong(b.getHits()), Long.parseLong(a.getHits()))) // Сортировка по убыванию хитов
                 .collect(Collectors.toList());
 
         log.info("Filtered and grouped statistics: {}", responseStats);
