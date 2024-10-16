@@ -1,6 +1,5 @@
 package ru.practicum.stats.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
