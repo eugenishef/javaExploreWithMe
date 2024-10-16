@@ -41,17 +41,26 @@ public class StatisticsService {
         List<Statistics> statsList = statisticsRepository.findAll();
         log.debug("Fetched {} records from the database", statsList.size());
 
-        List<StatisticsResponse> filteredStats = statsList.stream()
+        List<Statistics> filteredStats = statsList.stream()
                 .filter(stat -> !stat.getRequestTime().isBefore(start) && !stat.getRequestTime().isAfter(end))
                 .filter(stat -> uris == null || uris.isEmpty() || uris.contains(stat.getEndpoint()))
+                .collect(Collectors.toList());
+
+        if (unique) {
+            filteredStats = filteredStats.stream()
+                    .distinct()
+                    .collect(Collectors.toList());
+        }
+
+        List<StatisticsResponse> responseStats = filteredStats.stream()
                 .collect(Collectors.groupingBy(Statistics::getEndpoint))
                 .entrySet()
                 .stream()
                 .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), String.valueOf(entry.getValue().size()), null))
                 .collect(Collectors.toList());
 
-        log.info("Filtered and grouped statistics: {}", filteredStats);
-        return filteredStats;
+        log.info("Filtered and grouped statistics: {}", responseStats);
+        return responseStats;
     }
 
     public void logRequest(String endpoint) {
@@ -63,13 +72,5 @@ public class StatisticsService {
 
         statisticsRepository.save(stats);
         log.info("Request logged for endpoint: {}", endpoint);
-    }
-
-    public List<Statistics> getAllRequests() {
-        log.info("Fetching all requests from the database");
-        List<Statistics> allRequests = statisticsRepository.findAll();
-        log.debug("Fetched {} total requests", allRequests.size());
-
-        return allRequests;
     }
 }

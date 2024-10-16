@@ -22,15 +22,14 @@ import ru.practicum.stats.service.StatisticsService;
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @PostMapping("/hit")
     public ResponseEntity<StatisticsResponse> logHit(@Valid @RequestBody HitRequest hitRequest) {
         log.info("Received request to log hit: {}", hitRequest);
         Statistics stats = statisticsService.logHit(hitRequest);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedTimestamp = stats.getRequestTime().format(formatter);
-
+        String formattedTimestamp = stats.getRequestTime().format(FORMATTER);
         StatisticsResponse response = new StatisticsResponse(stats.getApp(), stats.getEndpoint(), stats.getIp(), formattedTimestamp);
 
         log.info("Hit logged successfully: {}", response);
@@ -43,10 +42,11 @@ public class StatisticsController {
             @RequestParam("end") String end,
             @RequestParam(value = "uris", required = false) List<String> uris,
             @RequestParam(value = "unique", defaultValue = "false") boolean unique) {
+
         statisticsService.logRequest("/stats");
 
-        LocalDateTime startDateTime = LocalDateTime.parse(start);
-        LocalDateTime endDateTime = LocalDateTime.parse(end);
+        LocalDateTime startDateTime = LocalDateTime.parse(start, FORMATTER);
+        LocalDateTime endDateTime = LocalDateTime.parse(end, FORMATTER);
 
         List<StatisticsResponse> stats = statisticsService.getStats(startDateTime, endDateTime, uris, unique);
 
