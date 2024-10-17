@@ -48,21 +48,19 @@ public class StatisticsService {
                     .collect(Collectors.toList());
         }
 
-        Map<String, Long> hitsMap;
         if (unique) {
-            hitsMap = statsList.stream()
-                    .collect(Collectors.groupingBy(Statistics::getEndpoint,
-                            Collectors.collectingAndThen(
-                                    Collectors.mapping(Statistics::getIp, Collectors.toSet()),
-                                    set -> (long) set.size())));  // Преобразуем в Long
-        } else {
-            hitsMap = statsList.stream()
-                    .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
+            return statsList.stream()
+                    .map(stat -> new StatisticsResponse(stat.getApp(), stat.getEndpoint(), stat.getIp(), stat.getRequestTime().toString()))
+                    .distinct()
+                    .collect(Collectors.toList());
         }
+
+        Map<String, Long> hitsMap = statsList.stream()
+                .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
 
         List<StatisticsResponse> responseStats = hitsMap.entrySet().stream()
                 .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), entry.getValue().toString(), null))
-                .sorted((stat1, stat2) -> Long.compare(Long.parseLong(stat2.getHits()), Long.parseLong(stat1.getHits()))) // Сортировка по убыванию хитов
+                .sorted((stat1, stat2) -> Long.compare(Long.parseLong(stat2.getHits()), Long.parseLong(stat1.getHits())))
                 .collect(Collectors.toList());
 
         log.info("Filtered, grouped, and sorted statistics: {}", responseStats);
