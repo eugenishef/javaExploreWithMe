@@ -9,8 +9,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/stats_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-    depends_on:
-      - stats-db
 
   stats-db:
     image: postgres:16.1
