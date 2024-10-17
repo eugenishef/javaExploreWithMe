@@ -48,18 +48,20 @@ public class StatisticsService {
                     .collect(Collectors.toList());
         }
 
+        Map<String, Long> hitsMap;
         if (unique) {
-            return statsList.stream()
-                    .map(stat -> new StatisticsResponse(stat.getApp(), stat.getEndpoint(), stat.getIp(), stat.getRequestTime().toString()))
-                    .distinct()
-                    .collect(Collectors.toList());
+            hitsMap = statsList.stream()
+                    .collect(Collectors.groupingBy(Statistics::getEndpoint,
+                            Collectors.collectingAndThen(
+                                    Collectors.mapping(Statistics::getIp, Collectors.toSet()),
+                                    ips -> (long) ips.size())));
+        } else {
+            hitsMap = statsList.stream()
+                    .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
         }
 
-        Map<String, Long> hitsMap = statsList.stream()
-                .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
-
         List<StatisticsResponse> responseStats = hitsMap.entrySet().stream()
-                .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), entry.getValue().toString(), null))
+                .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), entry.getValue().toString()))
                 .sorted((stat1, stat2) -> Long.compare(Long.parseLong(stat2.getHits()), Long.parseLong(stat1.getHits())))
                 .collect(Collectors.toList());
 

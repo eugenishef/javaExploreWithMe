@@ -32,7 +32,7 @@ public class StatisticsController {
         Statistics stats = statisticsService.logHit(hitRequest);
 
         String formattedTimestamp = stats.getRequestTime().format(FORMATTER);
-        StatisticsResponse response = new StatisticsResponse(stats.getApp(), stats.getEndpoint(), stats.getIp(), formattedTimestamp);
+        StatisticsResponse response = new StatisticsResponse(stats.getApp(), stats.getEndpoint(), stats.getIp());
 
         log.info("Hit logged successfully: {}", response);
         return ResponseEntity.ok(response);
@@ -57,7 +57,7 @@ public class StatisticsController {
             return ResponseEntity.ok(stats);
         } catch (DateTimeParseException e) {
             log.error("Invalid date format: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(Collections.singletonList(new StatisticsResponse("error", "Invalid date format", null, null)));
+            return ResponseEntity.badRequest().body(Collections.singletonList(new StatisticsResponse("error", "Invalid date format", null)));
         }
     }
 }

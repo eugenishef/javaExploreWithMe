@@ -11,5 +11,4 @@ public class StatisticsResponse {
     private String app;
     private String uri;
     private String hits;
-    private String timestamp;
 }
