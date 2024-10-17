@@ -20,5 +20,3 @@ logging:
 
 server:
   port: 9090
-
-
