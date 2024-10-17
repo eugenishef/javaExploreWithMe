@@ -50,7 +50,9 @@ public class StatisticsService {
 
         if (unique) {
             statsList = statsList.stream()
-                    .distinct()
+                    .collect(Collectors.groupingBy(Statistics::getIp))
+                    .values().stream()
+                    .map(list -> list.get(0))
                     .collect(Collectors.toList());
         }
 
@@ -59,10 +61,10 @@ public class StatisticsService {
 
         List<StatisticsResponse> responseStats = hitsMap.entrySet().stream()
                 .map(entry -> new StatisticsResponse("ewm-main-service", entry.getKey(), entry.getValue().toString(), null))
-                .sorted((a, b) -> Long.compare(Long.parseLong(b.getHits()), Long.parseLong(a.getHits()))) // Сортировка по убыванию хитов
+                .sorted((stat1, stat2) -> Long.compare(Long.parseLong(stat2.getHits()), Long.parseLong(stat1.getHits()))) // Сортировка по убыванию хитов
                 .collect(Collectors.toList());
 
-        log.info("Filtered and grouped statistics: {}", responseStats);
+        log.info("Filtered, grouped, and sorted statistics: {}", responseStats);
         return responseStats;
     }
 
