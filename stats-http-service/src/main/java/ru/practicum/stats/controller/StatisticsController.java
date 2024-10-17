@@ -31,8 +31,7 @@ public class StatisticsController {
         log.info("Received request to log hit: {}", hitRequest);
         Statistics stats = statisticsService.logHit(hitRequest);
 
-        String formattedTimestamp = stats.getRequestTime().format(FORMATTER);
-        StatisticsResponse response = new StatisticsResponse(stats.getApp(), stats.getEndpoint(), stats.getIp());
+        StatisticsResponse response = new StatisticsResponse(stats.getApp(), stats.getEndpoint(), 1L);
 
         log.info("Hit logged successfully: {}", response);
         return ResponseEntity.ok(response);
