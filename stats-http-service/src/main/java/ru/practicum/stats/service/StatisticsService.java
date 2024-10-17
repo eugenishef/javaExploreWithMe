@@ -56,6 +56,12 @@ public class StatisticsService {
                     .collect(Collectors.toList());
         }
 
+        if (!unique) {
+            return statsList.stream()
+                    .map(stat -> new StatisticsResponse("ewm-main-service", stat.getEndpoint(), "1", null)) // Для каждого события по одному запросу
+                    .collect(Collectors.toList());
+        }
+
         Map<String, Long> hitsMap = statsList.stream()
                 .collect(Collectors.groupingBy(Statistics::getEndpoint, Collectors.counting()));
 
@@ -67,6 +73,7 @@ public class StatisticsService {
         log.info("Filtered, grouped, and sorted statistics: {}", responseStats);
         return responseStats;
     }
+
 
     public void logRequest(String endpoint) {
         log.info("Logging request for endpoint: {}", endpoint);
