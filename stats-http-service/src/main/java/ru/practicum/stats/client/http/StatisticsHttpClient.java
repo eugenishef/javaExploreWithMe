@@ -1,5 +1,7 @@
 package ru.practicum.stats.client.http;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -8,9 +10,10 @@ import java.util.List;
 import ru.practicum.stats.client.dto.*;
 
 @Component
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatisticsHttpClient {
 
-    private final RestTemplate restTemplate;
+    final RestTemplate restTemplate;
 
     public StatisticsHttpClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;

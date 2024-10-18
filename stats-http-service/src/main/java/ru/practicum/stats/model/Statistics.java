@@ -1,8 +1,10 @@
 package ru.practicum.stats.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
@@ -10,20 +12,21 @@ import java.time.LocalDateTime;
 @Table(name = "statistics")
 @Data
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Statistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "app")
-    private String app;
+    String app;
 
     @Column(name = "endpoint", nullable = false)
-    private String endpoint;
+    String endpoint;
 
     @Column(name = "ip")
-    private String ip;
+    String ip;
 
     @Column(name = "request_time", nullable = false)
-    private LocalDateTime requestTime;
+    LocalDateTime requestTime;
 }

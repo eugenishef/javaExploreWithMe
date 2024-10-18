@@ -1,7 +1,9 @@
 package ru.practicum.stats.controller;
 
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,10 +23,11 @@ import ru.practicum.stats.service.StatisticsService;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatisticsController {
 
-    private final StatisticsService statisticsService;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    final StatisticsService statisticsService;
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @PostMapping("/hit")
     public ResponseEntity<StatisticsResponse> logHit(@Valid @RequestBody HitRequest hitRequest) {
