@@ -51,6 +51,7 @@ public class CompilationService {
 
         return compilationRepository.save(compilation);
     }
+
     public Compilation updateCompilation(Long id, CompilationRequest compilationRequest) {
         Optional<Compilation> optionalCompilation = compilationRepository.findById(id);
         if (optionalCompilation.isEmpty()) {

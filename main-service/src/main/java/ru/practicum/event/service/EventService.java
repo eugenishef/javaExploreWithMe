@@ -36,7 +36,6 @@ public class EventService {
         return eventRepository.findByCategory(category, pageable);
     }
 
-
     public Event publishEvent(Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + eventId));
