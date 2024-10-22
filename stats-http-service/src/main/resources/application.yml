@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/stats_db
+    url: jdbc:postgresql://localhost:5432/db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   sql:
     init:
-      schema-locations: classpath:schema.sql
+      mode: never
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
@@ -18,8 +18,8 @@ spring:
 
 logging:
   level:
-    root: DEBUG
-    sql: DEBUG
+    root: INFO
+    sql: TRACE
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 

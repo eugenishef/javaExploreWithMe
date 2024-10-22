@@ -1,12 +1,11 @@
-package ru.practicum;
+package ru.practicum.event;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StatsHttpServiceApp {
-
+public class MainServiceApp {
     public static void main(String[] args) {
-        SpringApplication.run(StatsHttpServiceApp.class, args);
+        SpringApplication.run(MainServiceApp.class, args);
     }
 }
