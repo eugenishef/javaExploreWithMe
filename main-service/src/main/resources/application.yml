@@ -24,4 +24,4 @@ logging:
     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 
 server:
-  port: 9090
+  port: 8080
