@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/stats_db
+    url: jdbc:postgresql://localhost:5433/main_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -24,4 +24,4 @@ logging:
     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 
 server:
-  port: 9090
+  port: 8080
