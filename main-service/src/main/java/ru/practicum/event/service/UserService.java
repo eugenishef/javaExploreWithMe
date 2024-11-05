@@ -1,55 +1,44 @@
 package ru.practicum.event.service;
 
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import ru.practicum.event.dto.NewUserRequest;
-import ru.practicum.event.dto.UserDto;
-import ru.practicum.event.model.User;
-import ru.practicum.event.repository.UserRepository;
-
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import ru.practicum.event.dto.EventDto;
+import ru.practicum.event.dto.EventRequestDto;
+import ru.practicum.event.model.*;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class UserService {
-
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public List<UserDto> getUsersByIdsAndPagination(List<Long> ids, int from, int size) {
-        Pageable pageable = PageRequest.of(from / size, size);
-
-        if (ids != null && !ids.isEmpty()) {
-            return userRepository.findByIdIn(ids, pageable).stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList());
-        } else {
-            return userRepository.findAll(pageable).stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList());
-        }
-    }
-
-    public UserDto createUser(NewUserRequest newUserRequest) {
-        User user = new User();
-        user.setEmail(newUserRequest.getEmail());
-        user.setName(newUserRequest.getName());
-
-        User savedUser = userRepository.save(user);
-        return new UserDto(savedUser);
-    }
-
-    public void deleteUser(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new EntityNotFoundException("Пользователь с id " + userId + " не найден");
-        }
-        userRepository.deleteById(userId);
-    }
-
+public interface UserService {
+    List<User> getUsersByIdsAndPagination(List<Long> ids, int from, int size);
+    User createUser(User newUser);
+    void deleteUser(Long userId);
+    Event createEvent(Long userId, @Valid EventRequestDto event);
+    Event updateEventStatus(Long userId, Long eventId, String newStatus);
+    Event getEventById(Long id);
+    Event publishEvent(Long eventId);
+    Event updateEvent(Long eventId, EventDto eventUpdates);
+    void deleteEvent(Long eventId);
+    Page<EventDto> getEvents(List<Long> users, List<String> states, List<Long> categories,
+                             String rangeStart, String rangeEnd, int from, int size);
+    List<Event> getPublicEvents(
+            String text,
+            List<Long> categories,
+            Boolean paid,
+            LocalDateTime rangeStart,
+            LocalDateTime rangeEnd,
+            Boolean onlyAvailable,
+            String sort,
+            int from,
+            int size
+    );
+    List<Event> getUserEvents(Long userId, int from, int size);
+    List<Request> getEventRequests(Long userId, Long eventId);
+    Request createRequest(Long userId, Long eventId);
+    void updateEventRequests(
+            Long userId,
+            Long eventId,
+            RequestStatusUpdate requestStatusUpdate
+    );
+    List<Request> getUserRequests(Long userId, Long eventId);
+    void cancelRequest(Long userId, Long requestId);
 }
-

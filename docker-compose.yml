@@ -1,35 +1,47 @@
 services:
-  stats-server:
-    build:
-      context: ./stats-http-service
-      dockerfile: Dockerfile
-    ports:
-      - "9090:9090"
+  postgres-db:
+    image: postgres:16.1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://main-db:5432/db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-    depends_on:
-      - main-db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   main-service:
     build:
       context: ./main-service
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "${MAIN_SERVICE_PORT}:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://main-db:5432/db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:${POSTGRES_PORT}/${POSTGRES_DB_MAIN}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
-      - main-db
+      postgres-db:
+        condition: service_healthy
 
-  main-db:
-    image: postgres:16.1
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+  stats-server:
+    build:
+      context: ./stats-http-service
+      dockerfile: Dockerfile
     ports:
-      - "5432:5432"
+      - "${STATS_SERVICE_PORT}:9090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:${POSTGRES_PORT}/${POSTGRES_DB_STATS}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+volumes:
+  postgres-data:

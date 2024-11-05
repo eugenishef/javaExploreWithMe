@@ -1,9 +1,16 @@
 package ru.practicum.event.model;
 
 import jakarta.persistence.Embeddable;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Location {
-    private double lat;
-    private double lon;
+    double lat;
+    double lon;
 }

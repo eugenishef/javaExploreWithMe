@@ -1,6 +1,7 @@
 package ru.practicum.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.event.model.Location;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +17,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class EventDto {
-    Long id;
+public class EventRequestDto {
 
     @NotBlank(message = "Название события не может быть пустым")
     String title;
+
+    String annotation;
 
     @NotBlank(message = "Описание события не может быть пустым")
     String description;
@@ -30,18 +31,16 @@ public class EventDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime eventDate;
 
-    String annotation;
+    @NotNull(message = "ID категории не может быть пустым")
+    Long category;
 
-    Long categoryId;
-
-    Long initiatorId;
-
-    Boolean paid;
+    boolean paid;
 
     @Min(value = 0, message = "Лимит участников не может быть отрицательным")
     Integer participantLimit;
 
-    Boolean requestModeration;
+    boolean requestModeration;
 
-    Location location;
+    double latitude;
+    double longitude;
 }

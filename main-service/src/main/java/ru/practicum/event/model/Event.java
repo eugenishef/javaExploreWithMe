@@ -1,52 +1,75 @@
 package ru.practicum.event.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "events")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
+
+    Long initiatorId;
 
     @Column(nullable = false)
-    private String title;
+    String title;
 
     @Column(nullable = false)
-    private String annotation;
+    String annotation;
 
     @Column(nullable = false)
-    private String description;
+    String description;
 
     @Column(name = "event_date", nullable = false)
-    private LocalDateTime eventDate;
+    LocalDateTime eventDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    Category category;
 
-    private boolean paid;
+    @Column(nullable = false)
+    boolean paid;
 
     @Column(name = "participant_limit", columnDefinition = "integer default 0")
-    private int participantLimit;
+    int participantLimit;
 
-    private boolean requestModeration;
+    @Column(nullable = false)
+    boolean requestModeration;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
 
     @Enumerated(EnumType.STRING)
-    private EventStatus status;
+    EventStatus status = EventStatus.PENDING;
 
-    @JsonProperty("category")
-    public void setCategoryId(Long categoryId) {
-        this.category = new Category(categoryId);
+    @Embedded
+    Location location;
+
+    @Column(name = "created_on", nullable = false, updatable = false)
+    LocalDateTime createdOn;
+
+//    @Column(name = "lat")
+//    double lat;
+//
+//    @Column(name = "lon")
+//    double lon;
+
+    @PrePersist
+    public void onCreate() {
+        this.createdOn = LocalDateTime.now();
+        this.status = EventStatus.PENDING;
     }
 }
-

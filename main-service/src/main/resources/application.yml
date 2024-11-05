@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/db
+    url: jdbc:postgresql://localhost:5432/main_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
   sql:
     init:
-      mode: never
+      mode: always
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
@@ -18,10 +18,39 @@ spring:
 
 logging:
   level:
-    root: INFO
-    sql: TRACE
+    root: DEBUG
+    sql: DEBUG
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
 
 server:
   port: 8080
+
+
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://${POSTGRES_HOST:postgres-db}:${POSTGRES_PORT}/${POSTGRES_DB_MAIN}
+#    username: ${POSTGRES_USER}
+#    password: ${POSTGRES_PASSWORD}
+#    driver-class-name: org.postgresql.Driver
+#  sql:
+#    init:
+#      mode: always
+#  jpa:
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    properties:
+#      hibernate:
+#        format_sql: true
+#
+#logging:
+#  level:
+#    root: DEBUG
+#    sql: DEBUG
+#  pattern:
+#    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+#
+#server:
+#  port: ${MAIN_SERVICE_PORT}
