@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -29,6 +30,6 @@ public class Compilation {
     List<Event> events;
 
     public List<Long> getEventIds() {
-        return events.stream().map(Event::getId).toList();
+        return events != null ? events.stream().map(Event::getId).toList() : Collections.emptyList();
     }
 }

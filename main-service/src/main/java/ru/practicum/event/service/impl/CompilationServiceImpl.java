@@ -38,9 +38,9 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public Compilation createCompilation(CompilationDto compilationDto) {
         List<Event> events = eventRepository.findAllById(compilationDto.getEvents());
-//        if (events.size() != compilationDto.getEvents().size()) {
-//            throw new AppException("Некоторые события не найдены.");
-//        }
+        if (events.size() != compilationDto.getEvents().size()) {
+            throw new NotFoundException("Некоторые события не найдены.");
+        }
 
         Compilation compilation = new Compilation();
         compilation.setTitle(compilationDto.getTitle());
@@ -66,12 +66,9 @@ public class CompilationServiceImpl implements CompilationService {
 
         if (compilationUpdates.getEvents() != null && !compilationUpdates.getEvents().isEmpty()) {
             List<Event> events = eventRepository.findAllById(compilationUpdates.getEvents());
-
-            // Проверяем наличие всех событий
-//            if (events.size() != compilationUpdates.getEvents().size()) {
-//                throw new NotFoundException("Некоторые события не найдены.");
-//            }
-
+            if (events.size() != compilationUpdates.getEvents().size()) {
+                throw new NotFoundException("Некоторые события не найдены.");
+            }
             existingCompilation.setEvents(events);
         }
 
@@ -88,3 +85,4 @@ public class CompilationServiceImpl implements CompilationService {
         compilationRepository.deleteById(id);
     }
 }
+

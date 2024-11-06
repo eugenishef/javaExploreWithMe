@@ -1,12 +1,13 @@
 package ru.practicum.event.service.impl;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.event.dto.CategoryDto;
 import ru.practicum.event.exception.NotFoundException;
+import ru.practicum.event.mapper.CategoryMapper;
 import ru.practicum.event.model.Category;
 import ru.practicum.event.repository.CategoryRepository;
 import ru.practicum.event.service.CategoryService;
@@ -15,14 +16,11 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-
-    @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    private final CategoryMapper categoryMapper; // Используем маппер для преобразований
 
     @Override
     public List<Category> getCategories(int from, int size) {
@@ -38,15 +36,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(CategoryDto categoryDto) {
-        Category category = new Category();
-        category.setName(categoryDto.getName());
+        Category category = categoryMapper.fromDtoToCategory(categoryDto);
         return categoryRepository.save(category);
     }
 
     @Override
     public Category updateCategory(Long id, CategoryDto categoryUpdates) {
         Category existingCategory = getCategoryById(id);
-        existingCategory.setName(categoryUpdates.getName());
+        if (categoryUpdates.getName() != null) {
+            existingCategory.setName(categoryUpdates.getName());
+        }
         return categoryRepository.save(existingCategory);
     }
 
@@ -58,3 +57,4 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
     }
 }
+

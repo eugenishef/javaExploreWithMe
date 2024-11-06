@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.event.dto.CompilationDto;
+import ru.practicum.event.mapper.CompilationMapper;
 import ru.practicum.event.model.Compilation;
 import ru.practicum.event.service.CompilationService;
 
@@ -28,18 +29,13 @@ public class PubCompilations {
             @RequestParam(defaultValue = "10") int size) {
         List<Compilation> compilations = compilationService.getCompilations(pinned, from, size);
         return compilations.stream()
-                .map(this::convertToDto)
+                .map(CompilationMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{compilationId}")
     public CompilationDto getCompilationById(@PathVariable Long compilationId) {
         Compilation compilation = compilationService.getCompilationById(compilationId);
-        return convertToDto(compilation);
-    }
-
-    private CompilationDto convertToDto(Compilation compilation) {
-        return new CompilationDto(compilation.getId(), compilation.getTitle(), compilation.isPinned(),
-                compilation.getEventIds());
+        return CompilationMapper.toDto(compilation);
     }
 }
