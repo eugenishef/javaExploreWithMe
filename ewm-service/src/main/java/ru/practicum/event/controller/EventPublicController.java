@@ -26,6 +26,7 @@ import ru.practicum.ewm.stats.dto.ViewStatsDto;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static ru.practicum.config.EWMServiceAppConfig.APP_NAME;
 
