@@ -21,7 +21,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    Long initiatorId;
+    @ManyToOne
+    @JoinColumn(name = "initiator_id", nullable = false)
+    User initiator;  // Изменено с Long initiatorId на User для сохранения связи
 
     @Column(nullable = false)
     String title;
@@ -48,10 +50,6 @@ public class Event {
     @Column(nullable = false)
     boolean requestModeration;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    User user;
-
     @Enumerated(EnumType.STRING)
     EventStatus status = EventStatus.PENDING;
 
@@ -60,12 +58,6 @@ public class Event {
 
     @Column(name = "created_on", nullable = false, updatable = false)
     LocalDateTime createdOn;
-
-//    @Column(name = "lat")
-//    double lat;
-//
-//    @Column(name = "lon")
-//    double lon;
 
     @PrePersist
     public void onCreate() {

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import ru.practicum.event.model.Location;
 
 import java.time.LocalDateTime;
 
@@ -40,6 +41,5 @@ public class EventRequestDto {
 
     boolean requestModeration;
 
-    double latitude;
-    double longitude;
+    Location location;
 }

@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class RequestStatusUpdate {
     private List<Long> requestIds;
-    private String status;
+    private RequestStatus status;
 }

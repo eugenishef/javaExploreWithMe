@@ -23,6 +23,7 @@ public class Request {
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
     Event event;
+
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     RequestStatus status;
