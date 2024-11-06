@@ -4,9 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.CompilationDto;
 import ru.practicum.event.mapper.CompilationMapper;
-import ru.practicum.event.model.Compilation;
 import ru.practicum.event.service.CompilationService;
 
 @RestController

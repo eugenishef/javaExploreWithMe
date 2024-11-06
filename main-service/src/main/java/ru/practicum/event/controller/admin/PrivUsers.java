@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.UserDto;
-import ru.practicum.event.model.User;
 import ru.practicum.event.service.UserService;
 
 import java.util.List;

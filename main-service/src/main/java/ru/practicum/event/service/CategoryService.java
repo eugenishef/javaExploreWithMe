@@ -1,7 +1,5 @@
 package ru.practicum.event.service;
 
-import ru.practicum.event.dto.CategoryDto;
-import ru.practicum.event.model.Category;
 import java.util.List;
 
 public interface CategoryService {

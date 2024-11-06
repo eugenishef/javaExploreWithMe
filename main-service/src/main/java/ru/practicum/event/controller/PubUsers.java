@@ -6,11 +6,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.EventDto;
-import ru.practicum.event.dto.EventRequestDto;
-import ru.practicum.event.model.Event;
-import ru.practicum.event.model.Request;
-import ru.practicum.event.model.RequestStatusUpdate;
 import ru.practicum.event.service.UserService;
 
 import java.util.List;

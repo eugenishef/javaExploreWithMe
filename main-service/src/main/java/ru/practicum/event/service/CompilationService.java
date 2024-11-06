@@ -1,7 +1,5 @@
 package ru.practicum.event.service;
 
-import ru.practicum.event.dto.CompilationDto;
-import ru.practicum.event.model.Compilation;
 import java.util.List;
 
 public interface CompilationService {

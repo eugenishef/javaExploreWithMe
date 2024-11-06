@@ -8,9 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.CategoryDto;
 import ru.practicum.event.mapper.CategoryMapper;
-import ru.practicum.event.model.Category;
 import ru.practicum.event.service.CategoryService;
 
 @RestController

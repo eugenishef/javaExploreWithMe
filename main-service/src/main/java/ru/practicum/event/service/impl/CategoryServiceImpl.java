@@ -5,10 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.event.dto.CategoryDto;
 import ru.practicum.event.exception.NotFoundException;
 import ru.practicum.event.mapper.CategoryMapper;
-import ru.practicum.event.model.Category;
 import ru.practicum.event.repository.CategoryRepository;
 import ru.practicum.event.service.CategoryService;
 

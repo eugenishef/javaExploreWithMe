@@ -2,8 +2,6 @@ package ru.practicum.event.service;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import ru.practicum.event.dto.EventDto;
-import ru.practicum.event.dto.EventRequestDto;
 import ru.practicum.event.model.*;
 import java.time.LocalDateTime;
 import java.util.List;

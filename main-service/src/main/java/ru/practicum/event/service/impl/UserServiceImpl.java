@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.practicum.event.dto.EventDto;
-import ru.practicum.event.dto.EventRequestDto;
 import ru.practicum.event.exception.*;
 import ru.practicum.event.model.*;
 import ru.practicum.event.repository.CategoryRepository;

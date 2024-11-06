@@ -1,35 +1,29 @@
 package ru.practicum.event.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Collections;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "compilations")
+@Data
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Compilation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false)
-    String title;
-
-    boolean pinned;
-
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "compilation_events",
             joinColumns = @JoinColumn(name = "compilation_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
     List<Event> events;
 
-    public List<Long> getEventIds() {
-        return events != null ? events.stream().map(Event::getId).toList() : Collections.emptyList();
-    }
+    boolean pinned;
+    String title;
 }

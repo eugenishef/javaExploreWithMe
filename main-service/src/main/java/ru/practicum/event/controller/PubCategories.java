@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.CategoryDto;
-import ru.practicum.event.model.Category;
 import ru.practicum.event.service.CategoryService;
 
 import java.util.List;

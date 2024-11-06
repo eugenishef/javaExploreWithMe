@@ -3,9 +3,7 @@ package ru.practicum.event.controller;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.CompilationDto;
 import ru.practicum.event.mapper.CompilationMapper;
-import ru.practicum.event.model.Compilation;
 import ru.practicum.event.service.CompilationService;
 
 import java.util.List;
