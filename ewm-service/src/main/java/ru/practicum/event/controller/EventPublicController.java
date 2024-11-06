@@ -3,7 +3,9 @@ package ru.practicum.event.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.StatsClient;
+import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.validation.enums.EnumValidator;
@@ -28,12 +31,13 @@ import java.util.Optional;
 import static ru.practicum.config.EWMServiceAppConfig.APP_NAME;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping(ApiPaths.PUBLIC_EVENTS_BASE_PATH)
 @RequiredArgsConstructor
 @Validated
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPublicController {
-    private final EventPublicService eventPublicService;
-    private final StatsClient statsClient;
+    final EventPublicService eventPublicService;
+    final StatsClient statsClient;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -53,7 +57,7 @@ public class EventPublicController {
                 text, categoriesIds, paid, rangeStartString, rangeEndString, onlyAvailable, sort, from, size);
     }
 
-    @GetMapping("/{eventId}")
+    @GetMapping(ApiPaths.EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long eventId,
                                      HttpServletRequest request) {

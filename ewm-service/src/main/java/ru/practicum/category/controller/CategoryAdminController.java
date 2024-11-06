@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.category.service.CategoryAdminService;
+import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
 
 @RestController
-@RequestMapping("/admin/categories")
+@RequestMapping(ApiPaths.ADMIN_CATEGORIES_BASE_PATH)
 @Validated
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -34,14 +35,14 @@ public class CategoryAdminController {
         return categoryAdminService.createCategory(newCategoryDto);
     }
 
-    @PatchMapping("/{categoryId}")
+    @PatchMapping(ApiPaths.CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto updateCategory(@PathVariable @Positive @NotNull Long categoryId,
                                       @RequestBody @Valid NewCategoryDto newCategoryDto) {
         return categoryAdminService.updateCategory(categoryId, newCategoryDto);
     }
 
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping(ApiPaths.CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable @Positive @NotNull Long categoryId) {
         categoryAdminService.deleteCategory(categoryId);

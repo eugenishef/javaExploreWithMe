@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.user.NewUserRequest;
 import ru.practicum.dto.user.UserDto;
 import ru.practicum.user.service.UserService;
@@ -24,7 +25,7 @@ import ru.practicum.user.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/users")
+@RequestMapping(ApiPaths.ADMIN_USERS_BASE_PATH)
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -46,7 +47,7 @@ public class UserController {
         return userService.getUsers(ids, from, size);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping(ApiPaths.USER_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable @Positive Long userId) {
         userService.deleteUser(userId);

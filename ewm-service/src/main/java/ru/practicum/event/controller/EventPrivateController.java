@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.event.NewEventDto;
@@ -29,7 +30,7 @@ import ru.practicum.event.service.EventPrivateService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{userId}/events")
+@RequestMapping(ApiPaths.USER_EVENTS_BASE_PATH)
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -52,14 +53,14 @@ public class EventPrivateController {
         return eventPrivateService.getAllUserEvents(userId, from, size);
     }
 
-    @GetMapping("/{eventId}")
+    @GetMapping(ApiPaths.EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long userId,
                                      @PathVariable @Positive Long eventId) {
         return eventPrivateService.getEventById(userId, eventId);
     }
 
-    @PatchMapping("/{eventId}")
+    @PatchMapping(ApiPaths.EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByUser(@PathVariable @Positive Long userId,
                                           @PathVariable @Positive Long eventId,
@@ -67,14 +68,14 @@ public class EventPrivateController {
         return eventPrivateService.updateEventByUser(userId, eventId, updateEventUserRequest);
     }
 
-    @GetMapping("/{eventId}/requests")
+    @GetMapping(ApiPaths.EVENT_REQUESTS_PATH)
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getParticipationRequestsOnEvent(@PathVariable @Positive Long userId,
                                                                          @PathVariable @Positive Long eventId) {
         return eventPrivateService.getParticipationRequestsOnEvent(userId, eventId);
     }
 
-    @PatchMapping("/{eventId}/requests")
+    @PatchMapping(ApiPaths.EVENT_REQUESTS_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult responseOnParticipationRequests(
             @PathVariable @Positive Long userId,

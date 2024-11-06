@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.compilation.service.CompilationPublicService;
+import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.compilation.CompilationDto;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/compilations")
+@RequestMapping(ApiPaths.PUBLIC_COMPILATIONS_BASE_PATH)
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -35,7 +36,7 @@ public class CompilationPublicController {
         return compilationPublicService.getFilteredCompilations(pinned, from, size);
     }
 
-    @GetMapping("/{compId}")
+    @GetMapping(ApiPaths.COMPILATION_ID_PATH)
     public CompilationDto getCompilationById(@PathVariable @Positive Long compId) {
         return compilationPublicService.getCompilationById(compId);
     }
