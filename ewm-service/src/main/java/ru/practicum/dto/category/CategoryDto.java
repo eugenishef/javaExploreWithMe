@@ -1,9 +1,12 @@
 package ru.practicum.dto.category;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryDto {
-    private Long id;
-    private String name;
+    Long id;
+    String name;
 }

@@ -1,7 +1,9 @@
 package ru.practicum.event.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,12 +28,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventAdminServiceBase extends EventServiceUtil implements EventAdminService {
-    private final EventRepository eventRepository;
-    private final CategoryRepository categoryRepository;
-    private final LocationRepository locationRepository;
-    private final EventMapper eventMapper;
-    private final LocationMapper locationMapper;
+    final EventRepository eventRepository;
+    final CategoryRepository categoryRepository;
+    final LocationRepository locationRepository;
+    final EventMapper eventMapper;
+    final LocationMapper locationMapper;
 
     @Override
     public List<EventFullDto> getAllEventsWithFilter(List<Long> usersIds,

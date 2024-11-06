@@ -1,6 +1,8 @@
 package ru.practicum.category.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.practicum.category.repository.CategoryRepository;
 import ru.practicum.dto.category.CategoryDto;
@@ -11,9 +13,10 @@ import ru.practicum.util.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryAdminServiceBase implements CategoryAdminService {
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
+    final CategoryRepository categoryRepository;
+    final CategoryMapper categoryMapper;
 
     @Override
     public CategoryDto createCategory(NewCategoryDto newCategoryDto) {

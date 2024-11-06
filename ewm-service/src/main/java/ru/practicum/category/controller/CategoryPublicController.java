@@ -3,7 +3,9 @@ package ru.practicum.category.controller;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +23,9 @@ import java.util.List;
 @RequestMapping("/categories")
 @Validated
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryPublicController {
-    private final CategoryPublicService categoryPublicService;
+    final CategoryPublicService categoryPublicService;
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)

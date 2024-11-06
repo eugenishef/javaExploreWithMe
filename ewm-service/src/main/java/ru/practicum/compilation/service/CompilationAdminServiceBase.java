@@ -1,6 +1,8 @@
 package ru.practicum.compilation.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.practicum.compilation.repository.CompilationRepository;
 import ru.practicum.dto.compilation.CompilationDto;
@@ -17,9 +19,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationAdminServiceBase implements CompilationAdminService {
-    private final CompilationRepository compilationRepository;
-    private final EventRepository eventRepository;
+    final CompilationRepository compilationRepository;
+    final EventRepository eventRepository;
 
     private final CompilationMapper compilationMapper;
 

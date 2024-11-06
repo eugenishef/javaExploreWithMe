@@ -1,7 +1,9 @@
 package ru.practicum.request.controller;
 
 import jakarta.validation.constraints.Positive;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +23,9 @@ import java.util.List;
 @RequestMapping("/users/{userId}/requests")
 @RequiredArgsConstructor
 @Validated
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestPrivateController {
-    private final RequestPrivateService requestPrivateService;
+    final RequestPrivateService requestPrivateService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

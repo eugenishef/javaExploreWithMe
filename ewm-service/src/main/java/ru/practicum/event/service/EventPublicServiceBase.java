@@ -1,7 +1,9 @@
 package ru.practicum.event.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +26,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPublicServiceBase extends EventServiceUtil implements EventPublicService {
-    private final EventRepository eventRepository;
-    private final CategoryRepository categoryRepository;
-    private final EventMapper eventMapper;
+    final EventRepository eventRepository;
+    final CategoryRepository categoryRepository;
+    final EventMapper eventMapper;
 
     @Override
     public List<EventShortDto> getPublicisedEventsWithFilter(String text,

@@ -9,31 +9,32 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.model.enums.ParticipationRequestStatus;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "participation_requests")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ParticipationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Instant created;
+    Long id;
+
+    Instant created;
     @ManyToOne
     @JoinColumn(name = "event_id")
-    private Event event; //event id
+
+    Event event;
+
     @ManyToOne
     @JoinColumn(name = "requester_id")
-    private User requester; //requester id
+    User requester;
+
     @Enumerated(EnumType.STRING)
-    private ParticipationRequestStatus status;
+    ParticipationRequestStatus status;
 }

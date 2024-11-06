@@ -1,6 +1,8 @@
 package ru.practicum.request.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.practicum.dto.event.request.ParticipationRequestDto;
 import ru.practicum.util.mapper.ParticipationRequestMapper;
@@ -21,11 +23,12 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestPrivateServiceBase implements RequestPrivateService {
-    private final RequestRepository requestRepository;
-    private final EventRepository eventRepository;
-    private final UserRepository userRepository;
-    private final ParticipationRequestMapper participationRequestMapper;
+    final RequestRepository requestRepository;
+    final EventRepository eventRepository;
+    final UserRepository userRepository;
+    final ParticipationRequestMapper participationRequestMapper;
 
     @Override
     public ParticipationRequestDto createParticipationRequest(Long userId, Long eventId) {

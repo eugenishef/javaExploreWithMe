@@ -1,6 +1,8 @@
 package ru.practicum.user.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserServiceBase implements UserService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    final UserRepository userRepository;
+    final UserMapper userMapper;
 
     @Override
     public UserDto createUser(NewUserRequest newUserRequest) {

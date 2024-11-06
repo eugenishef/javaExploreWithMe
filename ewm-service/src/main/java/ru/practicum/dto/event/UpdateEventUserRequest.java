@@ -2,28 +2,38 @@ package ru.practicum.dto.event;
 
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 import ru.practicum.dto.event.enums.StateActionUser;
 import ru.practicum.dto.location.LocationDto;
 import ru.practicum.dto.validation.enums.EnumValidator;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateEventUserRequest {
     @Length(min = 20, max = 2000)
-    private String annotation;
+    String annotation;
+
     @Positive
-    private Long categoryId;
+    Long categoryId;
+
     @Length(min = 20, max = 7000)
-    private String description;
-    private String eventDate;
-    private LocationDto location;
-    private Boolean paid;
+    String description;
+
+    String eventDate;
+
+    LocationDto location;
+    Boolean paid;
+
     @PositiveOrZero
-    private Integer participantLimit;
-    private Boolean requestModeration;
+    Integer participantLimit;
+    Boolean requestModeration;
+
     @EnumValidator(enumClazz = StateActionUser.class)
-    private String stateAction;
+    String stateAction;
+
     @Length(min = 3, max = 120)
-    private String title;
+    String title;
 }

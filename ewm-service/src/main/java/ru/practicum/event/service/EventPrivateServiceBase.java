@@ -1,6 +1,8 @@
 package ru.practicum.event.service;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,16 +47,17 @@ import static ru.practicum.model.enums.ParticipationRequestStatus.REJECTED;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPrivateServiceBase extends EventServiceUtil implements EventPrivateService {
-    private final EventRepository eventRepository;
-    private final RequestRepository requestRepository;
-    private final LocationRepository locationRepository;
-    private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+    final EventRepository eventRepository;
+    final RequestRepository requestRepository;
+    final LocationRepository locationRepository;
+    final CategoryRepository categoryRepository;
+    final UserRepository userRepository;
 
-    private final EventMapper eventMapper;
-    private final LocationMapper locationMapper;
-    private final ParticipationRequestMapper participationRequestMapper;
+    final EventMapper eventMapper;
+    final LocationMapper locationMapper;
+    final ParticipationRequestMapper participationRequestMapper;
 
     @Override
     public EventFullDto createNewEvent(Long userId, NewEventDto newEventDto) {
