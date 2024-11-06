@@ -6,7 +6,6 @@ import org.mapstruct.MappingConstants;
 import ru.practicum.dto.event.request.ParticipationRequestDto;
 import ru.practicum.model.ParticipationRequest;
 
-
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {UserMapper.class, EventMapper.class})
 public interface ParticipationRequestMapper {
 

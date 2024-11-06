@@ -1,7 +1,6 @@
 package ru.practicum.constants.paths;
 
 public final class ApiPaths {
-
     public static final String ADMIN_CATEGORIES_BASE_PATH = "/admin/categories";
     public static final String PUBLIC_CATEGORIES_BASE_PATH = "/categories";
     public static final String CATEGORY_ID_PATH = "/{category-id}";
@@ -24,5 +23,7 @@ public final class ApiPaths {
     public static final String ADMIN_USERS_BASE_PATH = "/admin/users";
     public static final String USER_ID_PATH = "/{user-id}";
 
-    private ApiPaths() {}
+    private ApiPaths() {
+
+    }
 }
