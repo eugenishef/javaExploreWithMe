@@ -1,29 +1,18 @@
 package ru.practicum.event.repository;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.stereotype.Repository;
+import ru.practicum.model.Event;
+import ru.practicum.model.enums.EventState;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
-public interface EventRepository extends JpaRepository<Event, Long> {
+@Repository
+public interface EventRepository extends JpaRepository<Event, Long>, QuerydslPredicateExecutor<Event> {
+    List<Event> findAllByInitiatorId(Long initiatorId, Pageable pageable);
 
-    @Query("SELECT e FROM Event e WHERE "
-            + "(:users IS NULL OR e.user.id IN :users) AND "
-            + "(:states IS NULL OR e.status IN :states) AND "
-            + "(:categories IS NULL OR e.category.id IN :categories) AND "
-            + "(:start IS NULL OR e.eventDate >= :start) AND "
-            + "(:end IS NULL OR e.eventDate <= :end)")
-    Page<Event> findAll(
-            @Param("users") List<Long> users,
-            @Param("states") List<String> states,
-            @Param("categories") List<Long> categories,
-            @Param("start") LocalDateTime start,
-            @Param("end") LocalDateTime end,
-            Pageable pageable);
-
-    Page<Event> findByUserId(Long userId, Pageable pageable);
+    Optional<Event> findByIdAndState(Long id, EventState eventState);
 }
