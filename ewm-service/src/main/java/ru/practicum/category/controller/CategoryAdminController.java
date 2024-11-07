@@ -27,7 +27,7 @@ import ru.practicum.dto.category.NewCategoryDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryAdminController {
 
-    public static final String CATEGORY_ID_PATH = "/{category-id}";
+    public static final String CATEGORY_ID_PATH = "/{categoryId}";
 
     final CategoryAdminService categoryAdminService;
 

@@ -29,7 +29,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventAdminController {
 
-    public static final String EVENT_ID_PATH = "/{event-id}";
+    public static final String EVENT_ID_PATH = "/{eventId}";
 
     final EventAdminService eventAdminService;
 

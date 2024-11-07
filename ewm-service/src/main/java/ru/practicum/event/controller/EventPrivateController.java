@@ -29,14 +29,14 @@ import ru.practicum.event.service.EventPrivateService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{user-id}/events")
+@RequestMapping("/users/{userId}/events")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPrivateController {
 
-    public static final String EVENT_ID_PATH = "/{event-id}";
-    public static final String EVENT_REQUESTS_PATH = "/{event-id}/requests";
+    public static final String EVENT_ID_PATH = "/{eventId}";
+    public static final String EVENT_REQUESTS_PATH = "/{eventId}/requests";
 
     final EventPrivateService eventPrivateService;
 

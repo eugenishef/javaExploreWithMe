@@ -20,13 +20,13 @@ import ru.practicum.request.service.RequestPrivateService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/{user-id}/requests")
+@RequestMapping("/users/{userId}/requests")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestPrivateController {
 
-    public static final String REQUEST_ID_PATH = "/{request-id}/cancel";
+    public static final String REQUEST_ID_PATH = "/{requestId}/cancel";
 
     final RequestPrivateService requestPrivateService;
 

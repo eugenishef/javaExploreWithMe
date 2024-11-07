@@ -26,7 +26,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryPublicController {
 
-    public static final String CATEGORY_ID_PATH = "/{category-id}";
+    public static final String CATEGORY_ID_PATH = "/{categoryId}";
 
     final CategoryPublicService categoryPublicService;
 

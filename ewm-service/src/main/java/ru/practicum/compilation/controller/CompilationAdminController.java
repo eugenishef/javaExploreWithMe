@@ -27,7 +27,7 @@ import ru.practicum.dto.compilation.UpdateCompilationRequest;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationAdminController {
 
-    public static final String COMPILATION_ID_PATH = "/{comp-id}";
+    public static final String COMPILATION_ID_PATH = "/{compId}";
     final CompilationAdminService compilationAdminService;
 
     @PostMapping

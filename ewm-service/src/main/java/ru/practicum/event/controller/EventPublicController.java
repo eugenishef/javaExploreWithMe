@@ -36,7 +36,7 @@ import static ru.practicum.config.EWMServiceAppConfig.APP_NAME;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPublicController {
 
-    public static final String EVENT_ID_PATH = "/{event-id}";
+    public static final String EVENT_ID_PATH = "/{eventId}";
 
     final EventPublicService eventPublicService;
     final StatsClient statsClient;

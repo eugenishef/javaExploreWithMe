@@ -25,7 +25,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationPublicController {
 
-    public static final String COMPILATION_ID_PATH = "/{comp-id}";
+    public static final String COMPILATION_ID_PATH = "/{compId}";
 
     final CompilationPublicService compilationPublicService;
 
