@@ -27,7 +27,7 @@ import ru.practicum.dto.compilation.UpdateCompilationRequest;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationAdminController {
 
-    public static final String COMPILATION_ID_PATH = "/{compId}";
+    public static final String COMPILATION_ID_PATH = "/{comp-id}";
     final CompilationAdminService compilationAdminService;
 
     @PostMapping
@@ -38,14 +38,14 @@ public class CompilationAdminController {
 
     @PatchMapping(COMPILATION_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
-    public CompilationDto updateCompilation(@PathVariable @Positive Long compId,
+    public CompilationDto updateCompilation(@PathVariable("comp-id") @Positive Long compId,
                                             @RequestBody @Valid UpdateCompilationRequest updateCompilationRequest) {
         return compilationAdminService.updateCompilation(compId, updateCompilationRequest);
     }
 
     @DeleteMapping(COMPILATION_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCompilation(@PathVariable @Positive Long compId) {
+    public void deleteCompilation(@PathVariable("comp-id") @Positive Long compId) {
         compilationAdminService.deleteCompilation(compId);
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationPublicController {
 
-    public static final String COMPILATION_ID_PATH = "/{compId}";
+    public static final String COMPILATION_ID_PATH = "/{comp-id}";
 
     final CompilationPublicService compilationPublicService;
 
@@ -39,7 +39,7 @@ public class CompilationPublicController {
     }
 
     @GetMapping(COMPILATION_ID_PATH)
-    public CompilationDto getCompilationById(@PathVariable @Positive Long compId) {
+    public CompilationDto getCompilationById(@PathVariable("comp-id") @Positive Long compId) {
         return compilationPublicService.getCompilationById(compId);
     }
 }

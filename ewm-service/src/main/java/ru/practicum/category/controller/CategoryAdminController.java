@@ -27,7 +27,7 @@ import ru.practicum.dto.category.NewCategoryDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryAdminController {
 
-    public static final String CATEGORY_ID_PATH = "/{categoryId}";
+    public static final String CATEGORY_ID_PATH = "/{category-id}";
 
     final CategoryAdminService categoryAdminService;
 
@@ -39,14 +39,14 @@ public class CategoryAdminController {
 
     @PatchMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto updateCategory(@PathVariable @Positive @NotNull Long categoryId,
+    public CategoryDto updateCategory(@PathVariable("category-id") @Positive @NotNull Long categoryId,
                                       @RequestBody @Valid NewCategoryDto newCategoryDto) {
         return categoryAdminService.updateCategory(categoryId, newCategoryDto);
     }
 
     @DeleteMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(@PathVariable @Positive @NotNull Long categoryId) {
+    public void deleteCategory(@PathVariable("category-id") @Positive @NotNull Long categoryId) {
         categoryAdminService.deleteCategory(categoryId);
     }
 }

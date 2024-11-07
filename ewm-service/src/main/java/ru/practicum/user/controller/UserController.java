@@ -30,7 +30,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserController {
 
-    public static final String USER_ID_PATH = "/{userId}";
+    public static final String USER_ID_PATH = "/{user-id}";
 
     final UserService userService;
 
@@ -51,7 +51,7 @@ public class UserController {
 
     @DeleteMapping(USER_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable @Positive Long userId) {
+    public void deleteUser(@PathVariable("user-id") @Positive Long userId) {
         userService.deleteUser(userId);
     }
 }

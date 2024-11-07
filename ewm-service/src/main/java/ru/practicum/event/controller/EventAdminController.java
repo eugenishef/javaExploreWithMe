@@ -29,7 +29,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventAdminController {
 
-    public static final String EVENT_ID_PATH = "/{eventId}";
+    public static final String EVENT_ID_PATH = "/{event-id}";
 
     final EventAdminService eventAdminService;
 
@@ -50,7 +50,7 @@ public class EventAdminController {
 
     @PatchMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto updateEventByAdmin(@PathVariable @Positive Long eventId,
+    public EventFullDto updateEventByAdmin(@PathVariable("event-id") @Positive Long eventId,
                                            @RequestBody @Valid UpdateEventAdminRequest updateEventAdminRequest) {
         return eventAdminService.updateEventByAdmin(eventId, updateEventAdminRequest);
     }

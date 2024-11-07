@@ -35,8 +35,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPrivateController {
 
-    public static final String EVENT_ID_PATH = "/{eventId}";
-    public static final String EVENT_REQUESTS_PATH = "/{eventId}/requests";
+    public static final String EVENT_ID_PATH = "/{event-id}";
+    public static final String EVENT_REQUESTS_PATH = "/{event-id}/requests";
 
     final EventPrivateService eventPrivateService;
 
@@ -59,14 +59,14 @@ public class EventPrivateController {
     @GetMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long userId,
-                                     @PathVariable @Positive Long eventId) {
+                                     @PathVariable("event-id") @Positive Long eventId) {
         return eventPrivateService.getEventById(userId, eventId);
     }
 
     @PatchMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByUser(@PathVariable @Positive Long userId,
-                                          @PathVariable @Positive Long eventId,
+                                          @PathVariable("event-id") @Positive Long eventId,
                                           @RequestBody  @Valid UpdateEventUserRequest updateEventUserRequest) {
         return eventPrivateService.updateEventByUser(userId, eventId, updateEventUserRequest);
     }
@@ -74,7 +74,7 @@ public class EventPrivateController {
     @GetMapping(EVENT_REQUESTS_PATH)
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getParticipationRequestsOnEvent(@PathVariable @Positive Long userId,
-                                                                         @PathVariable @Positive Long eventId) {
+                                                                         @PathVariable("event-id") @Positive Long eventId) {
         return eventPrivateService.getParticipationRequestsOnEvent(userId, eventId);
     }
 
@@ -82,7 +82,7 @@ public class EventPrivateController {
     @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResult responseOnParticipationRequests(
             @PathVariable @Positive Long userId,
-            @PathVariable @Positive Long eventId,
+            @PathVariable("event-id") @Positive Long eventId,
             @RequestBody  @Valid EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
         return eventPrivateService.responseOnParticipationRequests(userId, eventId, eventRequestStatusUpdateRequest);
     }

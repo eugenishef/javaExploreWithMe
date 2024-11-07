@@ -26,13 +26,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryPublicController {
 
-    public static final String CATEGORY_ID_PATH = "/{categoryId}";
+    public static final String CATEGORY_ID_PATH = "/{category-id}";
 
     final CategoryPublicService categoryPublicService;
 
     @GetMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto getCategoryById(@PathVariable @Positive @NotNull Long categoryId) {
+    public CategoryDto getCategoryById(@PathVariable("category-id") @Positive @NotNull Long categoryId) {
         return categoryPublicService.getCategoryById(categoryId);
     }
 

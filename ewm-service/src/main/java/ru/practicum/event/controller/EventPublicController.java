@@ -36,7 +36,7 @@ import static ru.practicum.config.EWMServiceAppConfig.APP_NAME;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPublicController {
 
-    public static final String EVENT_ID_PATH = "/{eventId}";
+    public static final String EVENT_ID_PATH = "/{event-id}";
 
     final EventPublicService eventPublicService;
     final StatsClient statsClient;
@@ -61,7 +61,7 @@ public class EventPublicController {
 
     @GetMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventById(@PathVariable @Positive Long eventId,
+    public EventFullDto getEventById(@PathVariable("event-id") @Positive Long eventId,
                                      HttpServletRequest request) {
         String uri = request.getRequestURI();
         long hitsBefore = getEndpointUniqueHits(uri);
