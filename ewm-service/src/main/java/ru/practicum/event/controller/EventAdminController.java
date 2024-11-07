@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.UpdateEventAdminRequest;
 import ru.practicum.event.service.EventAdminService;
@@ -24,11 +23,14 @@ import ru.practicum.event.service.EventAdminService;
 import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.ADMIN_EVENTS_BASE_PATH)
+@RequestMapping("/admin/events")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventAdminController {
+
+    public static final String EVENT_ID_PATH = "/{event-id}";
+
     final EventAdminService eventAdminService;
 
     @GetMapping
@@ -46,7 +48,7 @@ public class EventAdminController {
                 usersIds, states, categoriesIds, rangeStartString, rangeEndString, from, size);
     }
 
-    @PatchMapping(ApiPaths.EVENT_ID_PATH)
+    @PatchMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByAdmin(@PathVariable @Positive Long eventId,
                                            @RequestBody @Valid UpdateEventAdminRequest updateEventAdminRequest) {

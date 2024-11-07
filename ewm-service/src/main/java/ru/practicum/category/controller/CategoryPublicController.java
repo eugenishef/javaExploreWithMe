@@ -15,20 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.category.service.CategoryPublicService;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.category.CategoryDto;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.PUBLIC_CATEGORIES_BASE_PATH)
+@RequestMapping("/categories")
 @Validated
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryPublicController {
+
+    public static final String CATEGORY_ID_PATH = "/{category-id}";
+
     final CategoryPublicService categoryPublicService;
 
-    @GetMapping(ApiPaths.CATEGORY_ID_PATH)
+    @GetMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto getCategoryById(@PathVariable @Positive @NotNull Long categoryId) {
         return categoryPublicService.getCategoryById(categoryId);

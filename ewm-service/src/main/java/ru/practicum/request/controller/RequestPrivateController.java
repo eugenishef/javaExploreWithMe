@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.event.request.ParticipationRequestDto;
 import ru.practicum.request.service.RequestPrivateService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(ApiPaths.USER_REQUESTS_BASE_PATH)
+@RequestMapping("/users/{user-id}/requests")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestPrivateController {
+
+    public static final String REQUEST_ID_PATH = "/{request-id}/cancel";
+
     final RequestPrivateService requestPrivateService;
 
     @PostMapping
@@ -41,7 +43,7 @@ public class RequestPrivateController {
         return requestPrivateService.getAllOwnParticipationRequests(userId);
     }
 
-    @PatchMapping(ApiPaths.REQUEST_ID_PATH)
+    @PatchMapping(REQUEST_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public ParticipationRequestDto cancelOwnParticipationInEvent(@PathVariable @Positive Long userId,
                                                                  @PathVariable @Positive Long requestId) {

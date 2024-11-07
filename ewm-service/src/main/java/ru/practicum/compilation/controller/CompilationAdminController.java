@@ -16,17 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.compilation.service.CompilationAdminService;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.compilation.CompilationDto;
 import ru.practicum.dto.compilation.NewCompilationDto;
 import ru.practicum.dto.compilation.UpdateCompilationRequest;
 
 @RestController
-@RequestMapping(ApiPaths.ADMIN_COMPILATIONS_BASE_PATH)
+@RequestMapping("/admin/compilations")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationAdminController {
+
+    public static final String COMPILATION_ID_PATH = "/{comp-id}";
     final CompilationAdminService compilationAdminService;
 
     @PostMapping
@@ -35,14 +36,14 @@ public class CompilationAdminController {
         return compilationAdminService.createCompilation(newCompilationDto);
     }
 
-    @PatchMapping(ApiPaths.COMPILATION_ID_PATH)
+    @PatchMapping(COMPILATION_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public CompilationDto updateCompilation(@PathVariable @Positive Long compId,
                                             @RequestBody @Valid UpdateCompilationRequest updateCompilationRequest) {
         return compilationAdminService.updateCompilation(compId, updateCompilationRequest);
     }
 
-    @DeleteMapping(ApiPaths.COMPILATION_ID_PATH)
+    @DeleteMapping(COMPILATION_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompilation(@PathVariable @Positive Long compId) {
         compilationAdminService.deleteCompilation(compId);

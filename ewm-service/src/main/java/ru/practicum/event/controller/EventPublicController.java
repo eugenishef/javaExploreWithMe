@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.StatsClient;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 import ru.practicum.dto.validation.enums.EnumValidator;
@@ -31,11 +30,14 @@ import java.util.Optional;
 import static ru.practicum.config.EWMServiceAppConfig.APP_NAME;
 
 @RestController
-@RequestMapping(ApiPaths.PUBLIC_EVENTS_BASE_PATH)
+@RequestMapping("/events")
 @RequiredArgsConstructor
 @Validated
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventPublicController {
+
+    public static final String EVENT_ID_PATH = "/{event-id}";
+
     final EventPublicService eventPublicService;
     final StatsClient statsClient;
 
@@ -57,7 +59,7 @@ public class EventPublicController {
                 text, categoriesIds, paid, rangeStartString, rangeEndString, onlyAvailable, sort, from, size);
     }
 
-    @GetMapping(ApiPaths.EVENT_ID_PATH)
+    @GetMapping(EVENT_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long eventId,
                                      HttpServletRequest request) {

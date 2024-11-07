@@ -17,16 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.category.service.CategoryAdminService;
-import ru.practicum.constants.paths.ApiPaths;
 import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
 
 @RestController
-@RequestMapping(ApiPaths.ADMIN_CATEGORIES_BASE_PATH)
+@RequestMapping("/admin/categories")
 @Validated
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryAdminController {
+
+    public static final String CATEGORY_ID_PATH = "/{category-id}";
+
     final CategoryAdminService categoryAdminService;
 
     @PostMapping
@@ -35,14 +37,14 @@ public class CategoryAdminController {
         return categoryAdminService.createCategory(newCategoryDto);
     }
 
-    @PatchMapping(ApiPaths.CATEGORY_ID_PATH)
+    @PatchMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto updateCategory(@PathVariable @Positive @NotNull Long categoryId,
                                       @RequestBody @Valid NewCategoryDto newCategoryDto) {
         return categoryAdminService.updateCategory(categoryId, newCategoryDto);
     }
 
-    @DeleteMapping(ApiPaths.CATEGORY_ID_PATH)
+    @DeleteMapping(CATEGORY_ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable @Positive @NotNull Long categoryId) {
         categoryAdminService.deleteCategory(categoryId);
