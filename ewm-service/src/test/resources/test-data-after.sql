@@ -1,4 +1,5 @@
 DROP TABLE participation_requests;
+DROP TABLE comments;
 DROP TABLE compilation_events;
 DROP TABLE compilations;
 DROP TABLE events;
